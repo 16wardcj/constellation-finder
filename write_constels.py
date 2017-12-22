@@ -1,15 +1,19 @@
+"""Convert processed stellar objects .csv file into one file per constellation.
+
+Command line arguments:
+cons_bounds_f -- filepath to constellation boundary data
+objs_f - filepath to objects .csv file
+res_dir - filepath to directory which will contain constellation files
+
+Output:
+res_dir/XXX.csv - folder containing objects sorted by constellation
+
+Eg:
+python write_constels.py bound_20.dat objects.csv objects/
+"""
+
 import sys
 import pandas as pd
-
-"""
-input:
-    cons.csv - filepath to constellation boundary data
-    objects.csv - filepath to objects csv file
-    results_dir_filepath - filepath to directory which will contain constellation files
-
-output:
-    results_filepath/___.csv - folder containing all objects sorted by constellation
-"""
 
 con_bounds_f = sys.argv[1]
 objs_f = sys.argv[2]

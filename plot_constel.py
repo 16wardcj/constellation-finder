@@ -1,3 +1,20 @@
+"""Plot the boundary of a constellation in either cartesian or polar coordinates. Useful for visualising.
+
+Command line arguments:
+cons_name1 -- abbreviated name of first constellation
+cons_name2 -- abbreviated name of second constellation
+
+Output:
+Displays a graph.
+
+Eg:
+python plot_constel.py UMI CEP
+
+Notes:
+Polar coordinates are most suitable for constellations near the north and south poles. Use cartesian coordinates for constellations nearer the equator.
+To alternate between cartesian and polar coordinates comment out the appropriate line of code at the end of the file.
+"""
+
 import sys
 import pandas as pd
 import matplotlib.pyplot as plt

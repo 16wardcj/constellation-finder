@@ -1,22 +1,21 @@
-import sys
+"""Module that identifies constellation from stellar coordinates.
+
+Functions:
+find_constel -- return constellation name
+run -- perform find_constel for a table of stellar objects
+"""
+
 import pandas as pd
 
-"""
-WRITE PROPERLY
-input:
-    constellation boundaries filepath (from Vizier)
-    objects filepath (from NASA exoplanet archives)
-    output filename
+def find_constel(ra, dec, con_bounds):
+    """Return constellation name.
 
-output:
-    objects.csv (same as objects input but added column of constellation)
+    Keyword arguments:
+    ra -- right-ascension in HH.hhhh...
+    dec -- declination in DD.dddd...
+    con_bounds -- pandas DataFrame with constellation boundary info
 
-eg:
-"""
-
-def find_con(ra, dec, con_bounds):
-    """
-    DOCSTRING
+    Note that if the object lies on the boundary of two constellations XXX and YYY the result returned will be 'XXX+YYY'.
     """
     result = ""
 
@@ -77,10 +76,14 @@ def find_con(ra, dec, con_bounds):
 
     return result
 
-if __name__ == "__main__":
-    con_bounds_f = sys.argv[1]
-    objs_f = sys.argv[2]
-    res_f = sys.argv[3]
+def run(con_bounds_f, objs_f, res_f):
+    """Save a .csv file with original stellar object info plus an additional constellation column.
+
+    Keyword arguments:
+    con_bounds_f -- constellation boundary filename
+    objs_f -- stellar objects filename
+    res_f -- .csv output filename
+    """
 
     con_bounds = pd.read_table(con_bounds_f, delim_whitespace=True, names=["ra", "dec", "con", "i/o"])
     objs = pd.read_csv(objs_f, index_col=0, comment="#")
@@ -90,6 +93,6 @@ if __name__ == "__main__":
 
     for i, obj in objs.iterrows():
         print("%d of %d" % (i, objs.shape[0]))
-        objs.at[i, "con"] = find_con(obj["ra"], obj["dec"], con_bounds)
+        objs.at[i, "con"] = find_constel(obj["ra"], obj["dec"], con_bounds)
 
     objs.to_csv(res_f)
